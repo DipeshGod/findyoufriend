@@ -1,4 +1,4 @@
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user }: any) => {
   return (
     <div className="m-6 bg-blue-200 text-sm text-gray-950">
       <p className="mt-6">User ID: {user._id}</p>
