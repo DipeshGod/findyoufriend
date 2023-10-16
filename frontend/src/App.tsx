@@ -1,16 +1,17 @@
 import "./index.css";
 import { UserInfo } from "./components/UserInfo";
 import { useGetUsers } from "./hooks/useGetUsers";
+import { CircularProgress, Typography } from "@mui/material";
 
 const App = () => {
   const { users, isLoading, error } = useGetUsers();
 
   return (
     <>
-      <h1>Data Fetching in React App</h1>
+      <Typography variant="h3">Data Fetching in React App</Typography>
       <p>
         {isLoading ? (
-          <h2>Loading...</h2>
+          <CircularProgress />
         ) : (
           users?.data.map((user: any, index: number) => {
             return (
@@ -21,7 +22,11 @@ const App = () => {
           })
         )}
       </p>
-      {error ? <p>Something went Wrong!</p> : null}
+      {error ? (
+        <Typography variant="h4" className="text-red-600">
+          Something went Wrong!
+        </Typography>
+      ) : null}
     </>
   );
 };
