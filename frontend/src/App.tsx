@@ -12,7 +12,7 @@ const App = () => {
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          users?.map((user: any, index: number) => {
+          users?.data.map((user: any, index: number) => {
             return (
               <div key={index}>
                 <UserInfo user={user} />
