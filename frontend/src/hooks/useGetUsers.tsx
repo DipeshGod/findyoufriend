@@ -1,9 +1,6 @@
 // import { useEffect, useState } from "react";
 // import { getUsersApi } from "../lib/services/user";
 
-import { useQuery } from "@tanstack/react-query";
-import { getUsersApi } from "../lib/services/user";
-
 // const useGetUsers = () => {
 //   const [users, setUsers] = useState<any[]>();
 //   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +25,9 @@ import { getUsersApi } from "../lib/services/user";
 // };
 
 // export { useGetUsers };
+
+import { useQuery } from "@tanstack/react-query";
+import { getUsersApi } from "../lib/services/user";
 
 const useGetUsers = () => {
   const {
