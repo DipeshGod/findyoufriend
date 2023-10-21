@@ -33,10 +33,33 @@ const useUpcomingMovies = () => {
 
 const MoviesApp = () => {
   const { movies, isLoading, error } = useUpcomingMovies();
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  console.log(movies);
 
   return (
     <>
       <h3 className="text-3xl p-4"> These are the upcoming movies:</h3>
+      {movies?.map((movie: any, index: any) => {
+        return (
+          <div key={index}>
+            <img
+              className="pt-4 flex-auto mt-3"
+              height={300}
+              width={300}
+              src={movie?.primaryImage?.url}
+              alt="Movie poster"
+            />
+            <h2 className="text-md text-blue-600">
+              Movie Name: {movie?.originalTitleText?.text}
+            </h2>
+          </div>
+        );
+      })}
     </>
   );
 };

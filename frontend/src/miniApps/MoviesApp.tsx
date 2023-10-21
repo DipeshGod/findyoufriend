@@ -1,4 +1,4 @@
-import { isError } from "@tanstack/react-query";
+// import { isError } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -21,12 +21,14 @@ const useUpcomingMovies = () => {
         setIsLoading(true);
         const response = await movieApi.get("/titles/x/upcoming?page=1");
         setMovies(response.data.results);
+
         setIsLoading(false);
       } catch (e: any) {
         setError(e.message);
         setIsLoading(false);
       }
     }
+
     getMovies();
   }, []);
   return { movies, isLoading, error };
