@@ -1,50 +1,14 @@
 // import { isError } from "@tanstack/react-query";
-import { Button } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import { Button } from "@mui/material";
 
-const movieApi = axios.create({
-  baseURL: "https://moviesdatabase.p.rapidapi.com",
-  headers: {
-    "X-RapidAPI-Key": "4c50da5040mshf75aa74f17a1faap1bb575jsn94ac27ca284b",
-    "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-  },
-});
-
-const useUpcomingMovies = () => {
-  const [movies, setMovies] = useState<any>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
-  const [currentPage, setCurrentPage] = useState(
-    "/titles/x/upcoming?page=1&limit=5"
-  );
-
-  useEffect(() => {
-    async function getMovies() {
-      try {
-        setIsLoading(true);
-        const response = await movieApi.get(currentPage);
-        setMovies(response.data);
-
-        setIsLoading(false);
-      } catch (e: any) {
-        setError(e.message);
-        setIsLoading(false);
-      }
-    }
-
-    getMovies();
-  }, [currentPage]);
-
-  const handleNextPage = () => {
-    console.log(movies);
-    setCurrentPage(movies.next);
-  };
-  return { movies, isLoading, error, handleNextPage };
-};
+import { useUpcomingMovies } from "./hook/useUpcomingMovies";
+import { useHandleScroll } from "./hook/useHandleScroll";
 
 const MoviesApp = () => {
   const { movies, isLoading, error, handleNextPage } = useUpcomingMovies();
+
+  useHandleScroll(handleNextPage);
+
   if (isLoading) {
     return <div>loading...</div>;
   }
@@ -73,9 +37,9 @@ const MoviesApp = () => {
         })}
       </div>
       <div className="mt-5 flex justify-center">
-        <Button variant="contained" onClick={handleNextPage}>
+        {/* <Button variant="contained" onClick={handleNextPage}>
           Next
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
