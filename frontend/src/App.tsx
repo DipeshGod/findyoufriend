@@ -35,7 +35,7 @@
 
 import "./index.css";
 // import { MoviesApp } from "./miniApps/MoviesApp";
-import { MoviesApp } from "./miniApps/testing";
+import { MoviesApp } from "./miniApps/MoviesApp";
 
 const App = () => {
   return (

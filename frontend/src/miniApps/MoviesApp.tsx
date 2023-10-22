@@ -1,4 +1,5 @@
 // import { isError } from "@tanstack/react-query";
+import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -14,13 +15,16 @@ const useUpcomingMovies = () => {
   const [movies, setMovies] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [currentPage, setCurrentPage] = useState(
+    "/titles/x/upcoming?page=1&limit=5"
+  );
 
   useEffect(() => {
     async function getMovies() {
       try {
         setIsLoading(true);
-        const response = await movieApi.get("/titles/x/upcoming?page=1");
-        setMovies(response.data.results);
+        const response = await movieApi.get(currentPage);
+        setMovies(response.data);
 
         setIsLoading(false);
       } catch (e: any) {
@@ -30,36 +34,50 @@ const useUpcomingMovies = () => {
     }
 
     getMovies();
-  }, []);
-  return { movies, isLoading, error };
+  }, [currentPage]);
+
+  const handleNextPage = () => {
+    console.log(movies);
+    setCurrentPage(movies.next);
+  };
+  return { movies, isLoading, error, handleNextPage };
 };
 
 const MoviesApp = () => {
-  const { movies, isLoading, error } = useUpcomingMovies();
+  const { movies, isLoading, error, handleNextPage } = useUpcomingMovies();
   if (isLoading) {
     return <div>loading...</div>;
   }
   if (error) {
     return <div>{error}</div>;
   }
-  console.log(movies);
+
   return (
-    <>
-      <h3>Movies List:</h3>
-      {movies?.map((movie: any, index: number) => {
-        return (
-          <div key={index}>
-            <img
-              className="p-4 flex-auto m-3"
-              height={300}
-              width={300}
-              src={movie?.primaryImage?.url}
-              alt="Movie Poster"
-            />
-          </div>
-        );
-      })}
-    </>
+    <div className="p-4">
+      <div className="border grid grid-cols-3 gap-4 justify-between">
+        {movies?.results.map((movie: any, index: number) => {
+          if (movie.primaryImage?.url !== undefined) {
+            return (
+              <div key={index} className=" m-3">
+                <img
+                  className="pt-4 flex-auto mt-3"
+                  src={movie?.primaryImage?.url}
+                  alt="Movie Poster"
+                />
+                <h2 className="text-lg text-blue-600 pt-1">
+                  Movie Name: {movie.originalTitleText?.text}
+                </h2>
+              </div>
+            );
+          }
+        })}
+      </div>
+      <div className="mt-5 flex justify-center">
+        <Button variant="contained" onClick={handleNextPage}>
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 
