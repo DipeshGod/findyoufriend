@@ -1,5 +1,8 @@
 import {
+  Box,
+  Button,
   CircularProgress,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -9,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const coinRankingApi = axios.create({
   baseURL: "https://coinranking1.p.rapidapi.com",
@@ -23,6 +26,7 @@ const useGetCoins = () => {
   const [coins, setCoins] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function getCoins() {
@@ -36,11 +40,10 @@ const useGetCoins = () => {
             orderBy: "marketCap",
             orderDirection: "desc",
             limit: "10",
-            offset: "0",
+            offset: (page - 1) * 10,
           },
         });
-        console.log(response);
-        setCoins(response.data.data.coins);
+        setCoins(response.data.data);
         setIsLoading(false);
       } catch (e: any) {
         setError(e);
@@ -48,12 +51,19 @@ const useGetCoins = () => {
       }
     }
     getCoins();
-  }, []);
-  return { coins, isLoading, error };
+  }, [page]);
+  return { coins, isLoading, error, setPage, page };
 };
 
 const CoinRanking = () => {
-  const { coins, isLoading, error } = useGetCoins();
+  const { coins, isLoading, error, setPage, page } = useGetCoins();
+
+  const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
+    setPage(page);
+  };
+  const handleCoinClick = (coin: any) => {
+    console.log("hello", coin);
+  };
 
   //   if (isLoading) {
   //     return (
@@ -65,6 +75,7 @@ const CoinRanking = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
   return (
     <div>
       <TableContainer component={Paper}>
@@ -83,8 +94,12 @@ const CoinRanking = () => {
                 <CircularProgress color="success" />
               </div>
             ) : (
-              coins?.map((coin: any, index: number) => (
-                <TableRow key={index}>
+              coins?.coins.map((coin: any, index: number) => (
+                <TableRow
+                  key={index}
+                  onClick={() => handleCoinClick(coin)}
+                  hover={true}
+                >
                   <TableCell>{coin.rank}</TableCell>
                   <TableCell>
                     <img src={coin.iconUrl} height={30} width={30} />
@@ -97,6 +112,17 @@ const CoinRanking = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box display="flex" justifyContent="flex-end" sx={{ marginTop: "1rem" }}>
+        {coins ? (
+          <Pagination
+            onChange={handlePageChange}
+            count={Math.ceil(coins?.stats.total / 10) - 1}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+          />
+        ) : null}
+      </Box>
     </div>
   );
 };
