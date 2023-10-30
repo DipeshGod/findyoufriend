@@ -37,12 +37,14 @@ import "./index.css";
 import { CoinRanking } from "./miniApps/CoinRanking";
 // import { MoviesApp } from "./miniApps/MoviesApp";
 import { MoviesApp } from "./miniApps/MoviesApp";
+import { Quiz } from "./miniApps/testing";
 
 const App = () => {
   return (
     <>
       {/* <MoviesApp /> */}
       <CoinRanking />
+      {/* <Quiz /> */}
     </>
   );
 };
