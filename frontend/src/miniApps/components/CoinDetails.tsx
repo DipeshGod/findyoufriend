@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Dialog,
   IconButton,
   Slide,
@@ -8,8 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+
 import { TransitionProps } from "@mui/material/transitions";
+
+import { useGetCoinDetails } from "../hook/useGetCoinDetails";
+import React from "react";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -21,6 +25,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const CoinDetails = ({ selectedCoin, setSelectedCoin }: any) => {
+  const { coin, isLoading, error } = useGetCoinDetails(selectedCoin);
   return (
     <Dialog
       fullScreen
@@ -49,6 +54,21 @@ const CoinDetails = ({ selectedCoin, setSelectedCoin }: any) => {
           </IconButton>
         </Toolbar>
       </AppBar>
+      {isLoading ? (
+        <Box
+          height="100%"
+          width="100%"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography>Loading {selectedCoin.name}</Typography>
+        </Box>
+      ) : (
+        "Got Data"
+      )}
     </Dialog>
   );
 };

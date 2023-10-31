@@ -43,8 +43,8 @@ const App = () => {
   return (
     <>
       {/* <MoviesApp /> */}
-      {/* <CoinRanking /> */}
-      <Calculator />
+      <CoinRanking />
+      {/* <Calculator /> */}
     </>
   );
 };

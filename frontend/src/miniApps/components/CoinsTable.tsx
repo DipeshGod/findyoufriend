@@ -21,7 +21,6 @@ const CoinsTable = ({ selectedCoin, setSelectedCoin }: any) => {
   };
   const handleCoinClick = (coin: any) => {
     setSelectedCoin(coin);
-    console.log(selectedCoin, setSelectedCoin);
   };
 
   if (error) {
