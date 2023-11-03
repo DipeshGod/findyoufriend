@@ -42,8 +42,8 @@ import { MoviesApp } from "./miniApps/testing";
 const App = () => {
   return (
     <>
-      <MoviesApp />
-      {/* <CoinRanking /> */}
+      {/* <MoviesApp /> */}
+      <CoinRanking />
       {/* <Calculator /> */}
     </>
   );

@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Container,
   Dialog,
   IconButton,
   Slide,
@@ -14,6 +15,7 @@ import { TransitionProps } from "@mui/material/transitions";
 
 import { useGetCoinDetails } from "../hook/useGetCoinDetails";
 import React from "react";
+import { useGetCoinPriceHistory } from "../hook/useGetCoinPriceHistory";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,7 +27,11 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const CoinDetails = ({ selectedCoin, setSelectedCoin }: any) => {
-  const { coin, isLoading, error } = useGetCoinDetails(selectedCoin);
+  const { coin, isLoading } = useGetCoinDetails(selectedCoin);
+  const { coinPrices, isLoading: isCoinPricesLoding } =
+    useGetCoinPriceHistory(selectedCoin);
+  console.log(coinPrices);
+  console.log(coin);
   return (
     <Dialog
       fullScreen
@@ -67,7 +73,35 @@ const CoinDetails = ({ selectedCoin, setSelectedCoin }: any) => {
           <Typography>Loading {selectedCoin.name}</Typography>
         </Box>
       ) : (
-        "Got Data"
+        <Container>
+          <Box marginY="2rem">
+            <Box marginY="2rem">
+              <Typography variant="h4" sx={{ marginBottom: "1rem" }}>
+                {coin.name} Price Details
+              </Typography>
+              <Typography gutterBottom>Price: {coin.price}</Typography>
+              <Typography gutterBottom>Change % {coin.change}</Typography>
+            </Box>
+
+            <Box marginY="2rem">Chart</Box>
+            <Box marginY="2rem">
+              <Typography variant="h4" sx={{ marginBottom: "1rem" }}>
+                {coin.name} Market Information
+              </Typography>
+              <Typography gutterBottom>Rank: {coin.rank}</Typography>
+              <Typography gutterBottom>Market Cap: {coin.marketCap}</Typography>
+              <Typography gutterBottom>
+                Total Supply: {coin.supply.total}
+              </Typography>
+            </Box>
+            <Box marginY="2rem">
+              <Typography variant="h4" sx={{ marginBottom: "1rem" }}>
+                About {coin.name}
+              </Typography>
+              <Typography gutterBottom>{coin.description}</Typography>
+            </Box>
+          </Box>
+        </Container>
       )}
     </Dialog>
   );
