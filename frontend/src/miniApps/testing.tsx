@@ -1,16 +1,7 @@
-import { useState } from "react";
+import React from "react";
 
-const MoviesApp = () => {
-  const [counter, setCounter] = useState<number>(0);
-
-  const handleButton = () => {
-    setCounter(Number(counter + 1));
-  };
-  return (
-    <>
-      <button onClick={handleButton}>counter: {counter}</button>
-    </>
-  );
+const QuizTesting = () => {
+  return <div>QuizTesting</div>;
 };
 
-export { MoviesApp };
+export { QuizTesting };
