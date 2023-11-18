@@ -15,11 +15,12 @@ const useGetCoinPriceHistory = (selectedCoin: any) => {
           {
             params: {
               referenceCurrencyUuid: "yhjMzLPhuIDl",
-              timePeriod: "24h",
+              timePeriod: "1y",
             },
           }
         );
         setCoinPrices(response.data.data);
+        setIsLoading(false);
       } catch (e: any) {
         setError(e);
         setIsLoading(false);

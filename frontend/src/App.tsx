@@ -36,7 +36,6 @@
 import "./index.css";
 import { CoinRanking } from "./miniApps/CoinRanking";
 // import { MoviesApp } from "./miniApps/MoviesApp";
-// import { MoviesApp } from "./miniApps/MoviesApp";
 import { MoviesApp } from "./miniApps/testing";
 
 const App = () => {
