@@ -35,15 +35,18 @@
 
 import "./index.css";
 import { CoinRanking } from "./miniApps/CoinRanking";
-// import { MoviesApp } from "./miniApps/MoviesApp";
-import { MoviesApp } from "./miniApps/testing";
+import { Quiz } from "./miniApps/Quiz";
+
+import { QuizTesting } from "./miniApps/testing";
 
 const App = () => {
   return (
     <>
       {/* <MoviesApp /> */}
-      <CoinRanking />
+      {/* <CoinRanking /> */}
       {/* <Calculator /> */}
+      {/* <Quiz /> */}
+      <QuizTesting />
     </>
   );
 };
