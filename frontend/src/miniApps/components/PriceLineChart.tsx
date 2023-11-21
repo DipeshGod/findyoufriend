@@ -38,15 +38,16 @@ const labels = [
   "Dec",
 ];
 
-function elementsAtInterval(array: any, interval: number) {
-  return array.filter((_, index) => index % interval === 0);
-}
+// function elementsAtInterval(array: any, interval: number) {
+//   return array.filter((_: any, index: any) => index % interval === 0);
+// }
 
 const PriceLineChart = ({ selectedCoin }: any) => {
   const { coinPrices, isLoading } = useGetCoinPriceHistory(selectedCoin);
 
-  const monthlyTimeStamp = elementsAtInterval(coinPrices.history, 30);
-  console.log(monthlyTimeStamp);
+  // const monthlyTimeStamp = elementsAtInterval(coinPrices?.history, 30);
+  // console.log(coinPrices?.history);
+  // console.log(monthlyTimeStamp);
 
   const data = {
     labels,
