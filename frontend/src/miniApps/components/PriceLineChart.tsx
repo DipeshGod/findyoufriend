@@ -12,6 +12,7 @@ import faker from "faker";
 import { Line } from "react-chartjs-2";
 import { useGetCoinPriceHistory } from "../hook/useGetCoinPriceHistory";
 import { CircularProgress } from "@mui/material";
+import { useMemo } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -38,16 +39,27 @@ const labels = [
   "Dec",
 ];
 
-// function elementsAtInterval(array: any, interval: number) {
-//   return array.filter((_: any, index: any) => index % interval === 0);
-// }
+function elementsAtInterval(array: any, interval: number) {
+  if (!array) return [];
+  return array.filter((_: any, index: any) => index % interval === 0);
+}
 
 const PriceLineChart = ({ selectedCoin }: any) => {
   const { coinPrices, isLoading } = useGetCoinPriceHistory(selectedCoin);
 
-  // const monthlyTimeStamp = elementsAtInterval(coinPrices?.history, 30);
-  // console.log(coinPrices?.history);
-  // console.log(monthlyTimeStamp);
+  // const monthlyTimeStamp = elementsAtInterval(coinPrices?.history, 31);
+
+  // const elementsAtInterval = useCallback((array: any, interval: number) => {
+  //   if (!array) return [];
+  //   return array.filter((_: any, index: any) => index % interval === 0);
+  // }, []);
+
+  const monthlyTimeStamp = useMemo(
+    () => elementsAtInterval(coinPrices?.history, 31),
+    [coinPrices]
+  );
+
+  console.log(monthlyTimeStamp);
 
   const data = {
     labels,
@@ -62,9 +74,6 @@ const PriceLineChart = ({ selectedCoin }: any) => {
       },
     ],
   };
-  const x = new Date(1700265600 * 1000);
-  console.log(x);
-  console.log(x.getMonth());
 
   return (
     <div>
