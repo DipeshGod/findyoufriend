@@ -35,6 +35,7 @@
 // };
 // export { useGetCoins };
 
+// Doing the same thing using Tanstack/ React-query
 import { useQuery } from "@tanstack/react-query";
 import { cryptoApi } from "../lib/services/axios";
 import { useState } from "react";

@@ -69,7 +69,7 @@ const CoinDetails = ({ selectedCoin, setSelectedCoin }: any) => {
             alignItems: "center",
           }}
         >
-          <Typography>Loading {selectedCoin.name}</Typography>
+          <Typography>Loading {selectedCoin?.name}</Typography>
         </Box>
       ) : (
         <Container>
